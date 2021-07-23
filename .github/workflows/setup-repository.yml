@@ -3,9 +3,29 @@ on:
   push: {}
 
 jobs:
+  validate:
+    name: Validate repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if repo is a template repository
+        id: checkRepo
+        uses: actions/github-script@v4
+        with:
+          script: |
+            const repo = await github.repos.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            });
+
+            return String(repo.is_template);
+
+    outputs:
+      isTemplate: ${{ fromJSON(steps.checkRepo.outputs.result) }}
+
   setup:
     name: Reinitialize repository
     runs-on: ubuntu-latest
+    needs: [validate]
     steps:
       - name: Do not run scaffolding on template repository
         shell: bash
