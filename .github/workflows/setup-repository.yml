@@ -1,6 +1,8 @@
 name: Setup repository
 on:
-  push: {}
+  push:
+    branches:
+      - 'main'
 
 jobs:
   validate:
