@@ -28,13 +28,13 @@ jobs:
           RESULT: ${{ steps.checkRepo.outputs.result }}
 
     outputs:
-      isTemplate: ${{ fromJSON(steps.checkRepo.outputs.result) }}
+      isTemplate: ${{ steps.checkRepo.outputs.result }}
 
   setup:
     name: Reinitialize repository
     runs-on: ubuntu-latest
     needs: [validate]
-    if: ${{ !needs.validate.outputs.isTemplate }}
+    if: ${{ !fromJSON(needs.validate.outputs.isTemplate) }}
     steps:
       - name: Do not run scaffolding on template repository
         shell: bash
