@@ -15,12 +15,17 @@ jobs:
             const repo = await github.repos.get({
               owner: context.repo.owner,
               repo: context.repo.repo,
+              headers: {
+                accept: 'application/vnd.github.baptiste-preview+json'
+              }
             });
 
             return JSON.stringify(repo, null, 2);
 
       - name: Log output
-        run: echo "${{ steps.checkRepo.outputs.result }}"
+        run: echo "$RESULT"
+        env:
+          RESULT: ${{ steps.checkRepo.outputs.result }}
 
     outputs:
       isTemplate: ${{ fromJSON(steps.checkRepo.outputs.result) }}
