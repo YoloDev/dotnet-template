@@ -81,7 +81,7 @@ jobs:
         run: |
           rsync -r ./cookiecutter-temp/*/ . && \
           rm -rf ./cookiecutter-temp/ && \
-          rsync -r ./plain/*/ . && \
+          rsync -r ./plain/ . && \
           rm -rf ./plain/
 
       - name: Remove git files
