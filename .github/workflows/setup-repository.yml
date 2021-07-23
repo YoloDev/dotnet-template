@@ -36,21 +36,6 @@ jobs:
     needs: [validate]
     if: ${{ !fromJSON(needs.validate.outputs.isTemplate) }}
     steps:
-      - name: Do not run scaffolding on template repository
-        shell: bash
-        # This workflow runs when the `cookiecutter.json` file is modified.
-        # This is the trick to re-init a repository, but we don't want to
-        # run this action if this file is modified in the origin template repository.
-        #
-        # Using the GitHub rest API allows us to identify if the current repository
-        # is a template repository or not.
-        run: |
-          curl --silent -X GET \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github.baptiste-preview+json" \
-            https://api.github.com/repos/$GITHUB_REPOSITORY \
-            | jq --exit-status '.is_template == false';
-
       - uses: actions/checkout@v2
 
       - uses: actions/setup-python@v2
@@ -88,6 +73,14 @@ jobs:
         run: |
           rsync -r ./cookiecutter-temp/*/ . && \
           rm -rf ./cookiecutter-temp/
+
+      - name: Remove git files
+        run: rm -rf .git
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: result
+          path: '.'
 
       # - name: Reinitialize git repository
       #   shell: bash
