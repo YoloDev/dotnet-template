@@ -80,7 +80,9 @@ jobs:
         # files into the root directory so we can reinitialize git in the next step
         run: |
           rsync -r ./cookiecutter-temp/*/ . && \
-          rm -rf ./cookiecutter-temp/
+          rm -rf ./cookiecutter-temp/ && \
+          rsync -r ./plain/*/ . && \
+          rm -rf ./plain/
 
       - name: Remove git files
         run: rm -rf .git
