@@ -74,7 +74,7 @@ jobs:
       - name: Prepare root directory
         shell: bash
         # Remove {{cookiecutter.name}} and setup-repository workflow
-        run: rm -rf '{{cookiecutter.name}}' && rm .github/workflows/setup-repository.yml && renovate.json
+        run: rm -rf '{{cookiecutter.name}}' && rm .github/workflows/setup-repository.yml && rm renovate.json
 
       - name: Move files to root
         shell: bash
