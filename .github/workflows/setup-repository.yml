@@ -87,13 +87,12 @@ jobs:
           rsync -r ./plain/ . && \
           rm -rf ./plain/
 
-      - name: Remove git files
-        run: rm -rf .git
-
       - uses: actions/upload-artifact@v2
         with:
           name: result
-          path: '.'
+          path: |
+            .
+            !.git/
 
       - name: Reinitialize git repository
         shell: bash
