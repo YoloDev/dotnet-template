@@ -20,7 +20,7 @@ jobs:
               }
             });
 
-            return JSON.stringify(repo, null, 2);
+            return JSON.stringify(repo.is_template, null, 2);
 
       - name: Log output
         run: echo "$RESULT"
