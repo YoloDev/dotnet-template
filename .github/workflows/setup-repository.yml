@@ -68,13 +68,8 @@ jobs:
 
       - name: Prepare root directory
         shell: bash
-        # Remove all files and folder exepct .git/ and cookiecutter-temp/
-        run: |
-          find ./ -maxdepth 1 \
-          ! -name '.git' \
-          ! -name 'cookiecutter-temp' \
-          ! -name '.' \
-          ! -exec rm -rf {} +
+        # Remove {{cookiecutter.name}} and setup-repository workflow
+        run: rm -rf '{{cookiecutter.name}}' && rm .github/workflows/setup-repository.yml
 
       - name: Move files to root
         shell: bash
