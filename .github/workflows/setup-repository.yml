@@ -17,7 +17,7 @@ jobs:
               repo: context.repo.repo,
             });
 
-            return repo.is_template;
+            return JSON.stringify(repo, null, 2);
 
       - name: Log output
         run: echo "${{ steps.checkRepo.outputs.result }}"
