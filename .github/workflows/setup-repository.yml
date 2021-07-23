@@ -20,7 +20,10 @@ jobs:
               }
             });
 
-            return repo.data.is_template;
+            return {
+              template: repo.data.is_template,
+              name: context.repo.repo,
+            };
 
       - name: Log output
         run: echo "$RESULT"
@@ -28,7 +31,8 @@ jobs:
           RESULT: ${{ steps.checkRepo.outputs.result }}
 
     outputs:
-      isTemplate: ${{ steps.checkRepo.outputs.result }}
+      isTemplate: ${{ fromJSON(steps.checkRepo.outputs.result).template }}
+      name: ${{ fromJSON(steps.checkRepo.outputs.result).name }}
 
   setup:
     name: Reinitialize repository
@@ -37,6 +41,12 @@ jobs:
     if: ${{ !fromJSON(needs.validate.outputs.isTemplate) }}
     steps:
       - uses: actions/checkout@v2
+
+      - name: create-env-json
+        uses: schdck/create-env-json@v2
+        with:
+          file-name: 'cookiecutter.json'
+          name: ${{ needs.validate.outputs.name }}
 
       - uses: actions/setup-python@v2
         with:
