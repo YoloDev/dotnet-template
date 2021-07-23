@@ -42,11 +42,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: create-env-json
-        uses: schdck/create-env-json@v2
+      - name: Create cookiecutter.json
+        uses: actions/github-script@v4
         with:
-          file-name: 'cookiecutter.json'
-          name: ${{ needs.validate.outputs.name }}
+          script: |
+            const config = { name: context.repo.repo };
+            require('fs').writeFileSync('cookiecutter.json', JSON.stringify(config), { encoding: 'utf-8' });
 
       - uses: actions/setup-python@v2
         with:
