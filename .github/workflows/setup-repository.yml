@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Check if repo is a template repository
         id: checkRepo
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         with:
           script: |
             const repo = await github.rest.repos.get({
@@ -48,7 +48,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Create cookiecutter.json
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         with:
           script: |
             const config = { name: context.repo.repo };
