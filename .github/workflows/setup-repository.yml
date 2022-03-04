@@ -87,7 +87,7 @@ jobs:
           rsync -r ./plain/ . && \
           rm -rf ./plain/
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: result
           path: |
