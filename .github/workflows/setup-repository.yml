@@ -54,7 +54,7 @@ jobs:
             const config = { name: context.repo.repo };
             require('fs').writeFileSync('cookiecutter.json', JSON.stringify(config), { encoding: 'utf-8' });
 
-      - uses: actions/setup-python@v3
+      - uses: actions/setup-python@v4
         with:
           python-version: '3.x'
 
